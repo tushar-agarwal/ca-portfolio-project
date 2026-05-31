@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -22,7 +24,7 @@ CORS(app)
 
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "sqlite:///database.db"
+] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
 
 app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
