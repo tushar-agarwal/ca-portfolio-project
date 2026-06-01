@@ -2,6 +2,8 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+import API from "../services/api";
+
 const AppointmentPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -19,12 +21,29 @@ const AppointmentPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    alert("Appointment Request Submitted");
+    try {
+      const response = await API.post(
+        "/api/appointment",
+        formData
+      );
 
-    console.log(formData);
+      alert(response.data.message);
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        date: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit appointment");
+    }
   };
 
   return (

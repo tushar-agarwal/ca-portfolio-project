@@ -6,6 +6,8 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 
+import API from "../services/api";
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -22,20 +24,28 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Contact Form Data:", formData);
+    try {
+      const response = await API.post(
+        "/api/contact",
+        formData
+      );
 
-    alert("Thank you! Your inquiry has been submitted.");
+      alert(response.data.message);
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit inquiry");
+    }
   };
 
   return (
