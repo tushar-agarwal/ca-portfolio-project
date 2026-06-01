@@ -1,17 +1,16 @@
 from flask import Blueprint, jsonify
-
 from controllers.admin_controller import (
-    get_dashboard_data
+    get_all_contacts,
+    get_all_appointments
 )
 
-admin_bp = Blueprint(
-    "admin_bp",
-    __name__
-)
+admin_bp = Blueprint("admin_bp", __name__)
 
-@admin_bp.route("/dashboard")
-def dashboard():
+@admin_bp.route("/contacts")
+def contacts():
+    return jsonify(get_all_contacts())
 
-    data = get_dashboard_data()
 
-    return jsonify(data)
+@admin_bp.route("/appointments")
+def appointments():
+    return jsonify(get_all_appointments())

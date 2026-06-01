@@ -6,7 +6,9 @@ import ServicesPage from "../pages/ServicesPage";
 import ContactPage from "../pages/ContactPage";
 import BlogPage from "../pages/BlogPage";
 import AppointmentPage from "../pages/AppointmentPage";
-import AdminDashboard from "../pages/AdminDashboard";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import Appointments from "../pages/admin/Appointments";
+import Contacts from "../pages/admin/Contacts";
 import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
@@ -20,6 +22,16 @@ const AppRoutes = () => {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/appointment" element={<AppointmentPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
+
+        <Route
+          path="/admin/appointments"
+          element={<Appointments />}
+        />
+
+        <Route
+          path="/admin/contacts"
+          element={<Contacts />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
