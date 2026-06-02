@@ -12,6 +12,11 @@ from routes.admin_routes import admin_bp
 
 from models.contact_model import Contact
 
+from flask_jwt_extended import (
+    JWTManager
+)
+from routes.auth_routes import auth_bp
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -29,6 +34,12 @@ app.config[
 app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
 ] = False
+
+app.config[
+    "JWT_SECRET_KEY"
+] = "payal-secret-key"
+
+jwt = JWTManager(app)
 
 db.init_app(app)
 
@@ -48,6 +59,11 @@ app.register_blueprint(
 app.register_blueprint(
     admin_bp,
     url_prefix="/api/admin"
+)
+
+app.register_blueprint(
+    auth_bp,
+    url_prefix="/api/auth"
 )
 
 if __name__ == "__main__":

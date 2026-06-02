@@ -9,6 +9,8 @@ import AppointmentPage from "../pages/AppointmentPage";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import Appointments from "../pages/admin/Appointments";
 import Contacts from "../pages/admin/Contacts";
+import Login from "../pages/admin/Login";
+import ProtectedRoute from "../components/ProtectedRoute";
 import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
@@ -21,16 +23,37 @@ const AppRoutes = () => {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/appointment" element={<AppointmentPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
 
         <Route
-          path="/admin/appointments"
-          element={<Appointments />}
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/admin/contacts"
-          element={<Contacts />}
+          element={
+            <ProtectedRoute>
+              <Contacts />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/appointments"
+          element={
+            <ProtectedRoute>
+              <Appointments />
+            </ProtectedRoute>
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
