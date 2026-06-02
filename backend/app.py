@@ -29,7 +29,7 @@ CORS(app)
 
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = os.environ.get("DATABASE_URL", "sqlite:///database.db")
+] = "sqlite:///portfolio.db"
 
 app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
