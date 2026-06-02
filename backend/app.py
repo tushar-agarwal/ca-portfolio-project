@@ -12,9 +12,7 @@ from routes.admin_routes import admin_bp
 
 from models.contact_model import Contact
 
-from flask_jwt_extended import (
-    JWTManager
-)
+from flask_jwt_extended import JWTManager
 from routes.auth_routes import auth_bp
 
 app = Flask(__name__)

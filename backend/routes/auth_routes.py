@@ -8,6 +8,10 @@ from flask_jwt_extended import (
     create_access_token
 )
 
+from utils.password_helper import (
+    verify_password
+)
+
 auth_bp = Blueprint(
     "auth_bp",
     __name__
@@ -18,7 +22,7 @@ auth_bp = Blueprint(
     methods=["POST"]
 )
 def login():
-
+    return {"message": "login route working"}
     data = request.get_json()
 
     username = data.get(
@@ -34,18 +38,20 @@ def login():
     ).first()
 
     if not admin:
+
         return jsonify({
             "message":
-            "Invalid Credentials"
+            "Invalid Username"
         }), 401
 
     if not verify_password(
         password,
         admin.password
     ):
+
         return jsonify({
             "message":
-            "Invalid Credentials"
+            "Invalid Password"
         }), 401
 
     token = create_access_token(
@@ -53,5 +59,7 @@ def login():
     )
 
     return jsonify({
+        "message":
+        "Login Success",
         "token": token
     })

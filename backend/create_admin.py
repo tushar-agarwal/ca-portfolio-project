@@ -13,19 +13,28 @@ with app.app_context():
         username="payal"
     ).first()
 
-    if not existing:
-
-        admin = Admin(
-            username="payal",
-            password=hash_password(
-                "Payal@123"
-            )
-        )
-
-        db.session.add(admin)
+    if existing:
+        db.session.delete(existing)
         db.session.commit()
 
-        print("Admin Created")
+    admin = Admin(
+        username="payal",
+        password=hash_password(
+            "Payal@123"
+        )
+    )
 
-    else:
-        print("Admin Already Exists")
+    db.session.add(admin)
+    db.session.commit()
+
+    print(
+        "Admin Created Successfully"
+    )
+
+    print(
+        "Username : payal"
+    )
+
+    print(
+        "Password : Payal@123"
+    )

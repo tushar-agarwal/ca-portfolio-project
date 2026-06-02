@@ -1,7 +1,6 @@
 from config import db
 
 class Admin(db.Model):
-
     __tablename__ = "admins"
 
     id = db.Column(
