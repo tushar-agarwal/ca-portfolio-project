@@ -39,7 +39,10 @@ def login():
             "Invalid Credentials"
         }), 401
 
-    if admin.password != password:
+    if not verify_password(
+        password,
+        admin.password
+    ):
         return jsonify({
             "message":
             "Invalid Credentials"
