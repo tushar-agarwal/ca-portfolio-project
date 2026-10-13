@@ -2,7 +2,7 @@ from models.contact_model import Contact
 from models.appointment_model import Appointment
 
 def get_all_contacts():
-    contacts = Contact.query.all()
+    contacts = Contact.query.order_by(Contact.id.desc()).all()
 
     return [
         {
@@ -18,7 +18,7 @@ def get_all_contacts():
 
 
 def get_all_appointments():
-    appointments = Appointment.query.all()
+    appointments = Appointment.query.order_by(Appointment.id.desc()).all()
 
     return [
         {

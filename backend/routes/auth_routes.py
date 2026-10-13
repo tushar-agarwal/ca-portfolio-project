@@ -1,6 +1,4 @@
-from flask import Blueprint
-from flask import request
-from flask import jsonify
+from flask import Blueprint, jsonify, request
 
 from models.admin_model import Admin
 
@@ -22,37 +20,22 @@ auth_bp = Blueprint(
     methods=["POST"]
 )
 def login():
-    return {"message": "login route working"}
     data = request.get_json()
 
-    username = data.get(
-        "username"
-    )
+    if not isinstance(data, dict):
+        return jsonify({"message": "Username and password are required"}), 400
 
-    password = data.get(
-        "password"
-    )
+    username = data.get("username")
+    password = data.get("password")
+    if not isinstance(username, str) or not isinstance(password, str):
+        return jsonify({"message": "Username and password are required"}), 400
 
     admin = Admin.query.filter_by(
         username=username
     ).first()
 
-    if not admin:
-
-        return jsonify({
-            "message":
-            "Invalid Username"
-        }), 401
-
-    if not verify_password(
-        password,
-        admin.password
-    ):
-
-        return jsonify({
-            "message":
-            "Invalid Password"
-        }), 401
+    if not admin or not verify_password(password, admin.password):
+        return jsonify({"message": "Invalid username or password"}), 401
 
     token = create_access_token(
         identity=username

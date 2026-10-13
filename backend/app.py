@@ -1,5 +1,6 @@
 import os
 
+from dotenv import load_dotenv
 from flask import Flask
 from flask_cors import CORS
 
@@ -15,7 +16,17 @@ from models.contact_model import Contact
 from flask_jwt_extended import JWTManager
 from routes.auth_routes import auth_bp
 
+load_dotenv()
+
 app = Flask(__name__)
+
+secret_key = os.environ.get("JWT_SECRET_KEY")
+if not secret_key:
+    raise RuntimeError(
+        "JWT_SECRET_KEY must be set before starting the backend."
+    )
+
+database_url = os.environ.get("DATABASE_URL", "sqlite:///portfolio.db")
 
 @app.route("/")
 def home():
@@ -27,7 +38,7 @@ CORS(app)
 
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "sqlite:///portfolio.db"
+] = database_url
 
 app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
@@ -35,7 +46,7 @@ app.config[
 
 app.config[
     "JWT_SECRET_KEY"
-] = "payal-secret-key"
+] = secret_key
 
 jwt = JWTManager(app)
 
