@@ -22,6 +22,16 @@ the password-protected admin dashboard.
    `backend/instance/portfolio.db` on first startup. Set `DATABASE_URL` in
    `backend/.env` to use a different database URL.
 
+   To email `cpmittal15@gmail.com` an Excel workbook of all inquiries and
+   appointments whenever a new record is submitted, configure an email provider.
+   For local Gmail SMTP, set `SMTP_USERNAME` and `SMTP_PASSWORD` in
+   `backend/.env`; use a Google App Password, not your regular account password.
+   For Render's free compute plan, use Resend's HTTPS API instead: set
+   `RESEND_API_KEY` and `EMAIL_FROM`, and verify the sender domain with Resend.
+   In production, set provider credentials as private environment variables on
+   the backend host. If email delivery is unavailable, the record is still saved
+   and the API logs the notification failure.
+
 2. In a second terminal, create an admin account:
 
    ```powershell
@@ -49,4 +59,7 @@ the password-protected admin dashboard.
 
 For deployment, configure `JWT_SECRET_KEY` as a private environment variable
 and provide persistent storage for `DATABASE_URL` (or a managed database).
-Never use the example secret in a deployed environment.
+Also configure an email provider on the backend host to enable Excel email
+notifications. Render Free blocks outbound SMTP ports, so use an HTTPS email API
+such as Resend there; configure its `RESEND_API_KEY` and verified `EMAIL_FROM`.
+Never use the example secrets in a deployed environment.
