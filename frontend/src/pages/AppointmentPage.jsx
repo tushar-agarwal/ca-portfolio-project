@@ -26,7 +26,7 @@ const AppointmentPage = () => {
 
     try {
       const response = await API.post(
-        "/api/appointment",
+        "/appointment",
         formData
       );
 

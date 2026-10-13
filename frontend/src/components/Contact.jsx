@@ -29,7 +29,7 @@ const Contact = () => {
 
     try {
       const response = await API.post(
-        "/api/contact",
+        "/contact",
         formData
       );
 
